@@ -1,0 +1,34 @@
+name: Scala CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+env:
+  SBT_VERSION: 1.10.11
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      
+      - name: Setup sbt launcher
+        uses: sbt/setup-sbt@v1
+        with:
+          sbt-runner-version: ${{ env.SBT_VERSION }}
+      
+      - name: Format check
+        run: sbt scalafmtCheck
+      
+      - name: Build and Test
+        run: sbt compile
