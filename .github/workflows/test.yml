@@ -29,7 +29,7 @@ jobs:
           sbt-runner-version: ${{ env.SBT_VERSION }}
       
       - name: Format check
-        run: sbt scalafmtCheck
+        run: sbt clean scalafmtCheck
       
       - name: Build and Test
         run: sbt compile
